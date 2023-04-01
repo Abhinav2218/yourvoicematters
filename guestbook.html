@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Guestbook</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+		}
+
+		form {
+			margin-bottom: 20px;
+		}
+
+		input[type="text"], textarea {
+			display: block;
+			margin-bottom: 10px;
+			padding: 5px;
+			border-radius: 5px;
+			border: 1px solid #ccc;
+			font-size: 16px;
+			width: 100%;
+		}
+
+		input[type="submit"] {
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			padding: 10px;
+			cursor: pointer;
+			font-size: 16px;
+			margin-top: 10px;
+		}
+
+		input[type="submit"]:hover {
+			background-color: #3e8e41;
+		}
+
+		#guestbook {
+			margin-top: 20px;
+		}
+
+		#guestbook p {
+			margin-bottom: 10px;
+			padding: 10px;
+			border-radius: 5px;
+			background-color: #f2f2f2;
+			border: 1px solid #ccc;
+		}
+
+		#search {
+			margin-bottom: 10px;
+		}
+	</style>
+	<title>Your Voice Matters </title>
+</head>
+<body>
+	<h1>Your Voice Matters </h1>
+	<form>
+		<label for="name">Name:</label>
+		<input type="text" id="name" name="name" placeholder="Your name...">
+		<label for="message">Message:</label>
+		<textarea id="message" name="message" rows="4" placeholder="Your message..."></textarea>
+		<input type="submit" value="Post">
+	</form>
+	<div id="search">
+		<label for="searchField">Search:</label>
+		<input type="text" id="searchField" name="searchField" placeholder="Search...">
+	</div>
+	<div id="guestbook">
+		<!-- Guestbook messages will be displayed here -->
+	</div>
+	<script>
+		const form = document.querySelector('form');
+		const guestbook = document.querySelector('#guestbook');
+		const searchField = document.querySelector('#searchField');
+
+		form.addEventListener('submit', (event) => {
+			event.preventDefault();
+			const name = form.name.value.trim();
+			const message = form.message.value.trim();
+			if (name && message) {
+				const newMessage = document.createElement('p');
+				newMessage.innerHTML = `<strong>${name}:</strong> ${message}`;
+				guestbook.appendChild(newMessage);
+				form.reset();
+			}
+		});
+
+		searchField.addEventListener('input', () => {
+			const filter = searchField.value.trim().toLowerCase();
+			const messages = guestbook.querySelectorAll('p');
+			messages.forEach((message) => {
+				const text = message.textContent.toLowerCase();
+				if (text.includes(filter)) {
+					message.style.display = '';
+				} else {
+					message.style.display = 'none';
+				}
+			});
+		});
+	</script>
+</body>
+</html>
